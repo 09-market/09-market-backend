@@ -1,7 +1,7 @@
 package com.gonggu.market.api.domain;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -16,8 +16,7 @@ public abstract class BaseEntity {
     @Column(updatable = false)
     private Instant createdAt;
 
-    @LastModifiedBy
-    @Column(updatable = false)
+    @LastModifiedDate
     private Instant updatedAt;
 
     public Instant getCreatedAt() {
@@ -26,13 +25,5 @@ public abstract class BaseEntity {
 
     public Instant getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
