@@ -4,7 +4,7 @@ import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.domain.user.UserRepository;
-import org.junit.Before;
+import com.gonggu.market.api.dto.auth.SignupDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserServiceTest {
-    @Autowired UserService userService;
+class AuthServiceTest {
+    @Autowired
+    AuthService authService;
     @Autowired UserRepository userRepository;
     @Autowired AddressRepository addressRepository;
 
@@ -45,10 +45,16 @@ class UserServiceTest {
         newUser.setPoint(0);
 
         // when
-        Long saveId = userService.saveTest(newUser);
+        User savedUser = authService.saveTest(
+                new SignupDto(
+                        newUser.getEmail(),
+                        newUser.getPassword(),
+                        newUser.getNickname(),
+                        newUser.getMobile()
+                ));
 
         // then
-        User findUser = userRepository.findById(saveId).get();
+        User findUser = userRepository.findById(savedUser.getId()).get();
         assertThat(newUser.getEmail()).isEqualTo(findUser.getEmail());
     }
 }

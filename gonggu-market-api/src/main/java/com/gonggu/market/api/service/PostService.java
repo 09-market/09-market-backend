@@ -36,7 +36,8 @@ public class PostService {
                 new VerifiedPostDto(
                         verifiedPost.getTitle(),
                         verifiedPost.getNickname(),
-                        verifiedPost.getContent()
+                        verifiedPost.getContent(),
+                        verifiedPost.getCreatedAt()
                 )
         ));
         return dtoList;

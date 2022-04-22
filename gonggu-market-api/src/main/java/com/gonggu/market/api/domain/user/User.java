@@ -28,10 +28,12 @@ public class User extends BaseEntity {
 
     private int point;
 
+    private String role;
+
     public User() {
     }
 
-    public User(Long id, String email, String password, String nickname, String mobile, Address address, String detailAddress, int point) {
+    public User(Long id, String email, String password, String nickname, String mobile, Address address, String detailAddress, int point, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -40,6 +42,7 @@ public class User extends BaseEntity {
         this.address = address;
         this.detailAddress = detailAddress;
         this.point = point;
+        this.role = role;
     }
 
     public Long getId() {
@@ -104,5 +107,13 @@ public class User extends BaseEntity {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
