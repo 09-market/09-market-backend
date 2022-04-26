@@ -116,4 +116,19 @@ public class User extends BaseEntity {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", address=" + address +
+                ", detailAddress='" + detailAddress + '\'' +
+                ", point=" + point +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }
