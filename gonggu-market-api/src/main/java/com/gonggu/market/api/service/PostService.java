@@ -50,12 +50,12 @@ public class PostService {
 
         VerifiedPost post = new VerifiedPost();
         post.setTitle(dto.getTitle());
-        post.setNickname(principalDetails.getUsername());
+        post.setNickname(principalDetails.getUser().getNickname());
         post.setContent(imageFileName);
         post.setUser(principalDetails.getUser());
 
-        VerifiedPost verifiedPostEntity = verifiedPostRepository.save(post);
-        return verifiedPostEntity;
+        post = verifiedPostRepository.save(post);
+        return post;
     }
 
 //    public Collection<VerifiedPostDto> readAll() {

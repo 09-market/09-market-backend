@@ -58,4 +58,14 @@ public class Address extends BaseEntity {
     public void setProvince(String province) {
         this.province = province;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", zipcode='" + zipcode + '\'' +
+                ", citytown='" + citytown + '\'' +
+                ", province='" + province + '\'' +
+                '}';
+    }
 }
