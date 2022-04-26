@@ -4,3 +4,6 @@ server:
 spring:
   profiles:
     active: local
+
+file:
+  path: /Users/seominah/Desktop/09-market/09-market-backend/upload/

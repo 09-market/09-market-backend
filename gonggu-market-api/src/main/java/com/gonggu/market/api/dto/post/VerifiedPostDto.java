@@ -1,17 +1,26 @@
 package com.gonggu.market.api.dto.post;
 
+import com.gonggu.market.api.domain.post.VerifiedPost;
+import com.gonggu.market.api.domain.user.User;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.Instant;
+
 public class VerifiedPostDto {
     private String title;
     private String nickname;
-    private String content;
+//    private MultipartFile file;
+    private Instant createdAt;
+
 
     public VerifiedPostDto() {
     }
 
-    public VerifiedPostDto(String title, String nickname, String content) {
+    public VerifiedPostDto(String title, String nickname, Instant createdAt) {
         this.title = title;
         this.nickname = nickname;
-        this.content = content;
+//        this.file = file;
+        this.createdAt = createdAt;
     }
 
     public String getTitle() {
@@ -22,8 +31,12 @@ public class VerifiedPostDto {
         return nickname;
     }
 
-    public String getContent() {
-        return content;
+//    public MultipartFile getFile() {
+//        return file;
+//    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
     public void setTitle(String title) {
@@ -34,7 +47,11 @@ public class VerifiedPostDto {
         this.nickname = nickname;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+//    public void setFile(MultipartFile file) {
+//        this.file = file;
+//    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 }
