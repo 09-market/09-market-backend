@@ -50,7 +50,7 @@ public class PostService {
 
         VerifiedPost post = new VerifiedPost();
         post.setTitle(dto.getTitle());
-        post.setNickname(principalDetails.getUsername());
+        post.setNickname(principalDetails.getUser().getNickname());
         post.setContent(imageFileName);
         post.setUser(principalDetails.getUser());
 

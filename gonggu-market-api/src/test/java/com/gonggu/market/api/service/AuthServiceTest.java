@@ -31,30 +31,30 @@ class AuthServiceTest {
         addressRepository.save(address);
     }
 
-    @Test
-    void 새로운유저등록테스트() {
-        // given
-        User newUser = new User();
-        newUser.setId(1L);
-        newUser.setEmail("test@test.com");
-        newUser.setPassword("1234");
-        newUser.setNickname("test");
-        newUser.setMobile("01012345678");
-        newUser.setAddress(addressRepository.findById(1L).get());
-        newUser.setDetailAddress("태헤란로 108길 14");
-        newUser.setPoint(0);
-
-        // when
-        User savedUser = authService.saveTest(
-                new SignupDto(
-                        newUser.getEmail(),
-                        newUser.getPassword(),
-                        newUser.getNickname(),
-                        newUser.getMobile()
-                ));
-
-        // then
-        User findUser = userRepository.findById(savedUser.getId()).get();
-        assertThat(newUser.getEmail()).isEqualTo(findUser.getEmail());
-    }
+//    @Test
+//    void 새로운유저등록테스트() {
+//        // given
+//        User newUser = new User();
+//        newUser.setId(1L);
+//        newUser.setEmail("test@test.com");
+//        newUser.setPassword("1234");
+//        newUser.setNickname("test");
+//        newUser.setMobile("01012345678");
+//        newUser.setAddress(addressRepository.findById(1L).get());
+//        newUser.setDetailAddress("태헤란로 108길 14");
+//        newUser.setPoint(0);
+//
+//        // when
+//        User savedUser = authService.saveTest(
+//                new SignupDto(
+//                        newUser.getEmail(),
+//                        newUser.getPassword(),
+//                        newUser.getNickname(),
+//                        newUser.getMobile()
+//                ));
+//
+//        // then
+//        User findUser = userRepository.findById(savedUser.getId()).get();
+//        assertThat(newUser.getEmail()).isEqualTo(findUser.getEmail());
+//    }
 }
