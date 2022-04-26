@@ -54,8 +54,8 @@ public class PostService {
         post.setContent(imageFileName);
         post.setUser(principalDetails.getUser());
 
-        VerifiedPost verifiedPostEntity = verifiedPostRepository.save(post);
-        return verifiedPostEntity;
+        post = verifiedPostRepository.save(post);
+        return post;
     }
 
 //    public Collection<VerifiedPostDto> readAll() {
