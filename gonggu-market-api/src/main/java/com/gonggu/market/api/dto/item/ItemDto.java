@@ -1,23 +1,37 @@
 package com.gonggu.market.api.dto.item;
 
 public class ItemDto {
+    private Long itemId;
     private String name;
     private String itemImageUrl;
     private String itemInfo;
     private int price;
     private int amount;
     private String category;
+    private int likes = 0;
+    private int comments = 0;
 
     public ItemDto() {
     }
 
-    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
+    public ItemDto(Long itemId, String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
+        this.itemId = itemId;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
         this.price = price;
         this.amount = amount;
         this.category = category;
+        this.likes = likes;
+        this.comments = comments;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -66,5 +80,21 @@ public class ItemDto {
 
     public void setItemImageUrl(String itemImageUrl) {
         this.itemImageUrl = itemImageUrl;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }
