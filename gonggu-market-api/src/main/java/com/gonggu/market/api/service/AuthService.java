@@ -33,6 +33,7 @@ public class AuthService {
             System.out.println("address : " + address.toString());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         User user = new User();
         user.setEmail(dto.getEmail());
         String rawPassword = dto.getPassword();

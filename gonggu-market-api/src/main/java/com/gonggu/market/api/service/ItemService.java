@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,7 +43,8 @@ public class ItemService {
         try {
             Files.write(imageFilePath, file.getBytes());
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
+            ;
         }
 
         Item item = new Item();
@@ -58,5 +61,20 @@ public class ItemService {
 
         item = itemRepository.save(item);
         return item;
+    }
+
+    public List<ItemDto> readItemAll() {
+        List<ItemDto> itemDtoList = new ArrayList<>();
+        this.itemRepository.findAll().forEach(item -> {
+            itemDtoList.add(new ItemDto(
+                    item.getName(),
+                    item.getItemImageUrl(),
+                    item.getItem_info(),
+                    item.getPrice(),
+                    item.getAmount(),
+                    item.getCategory().getCategoryName()
+                    ));
+        });
+        return itemDtoList;
     }
 }

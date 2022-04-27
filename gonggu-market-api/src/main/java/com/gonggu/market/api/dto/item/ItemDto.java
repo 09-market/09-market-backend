@@ -2,6 +2,7 @@ package com.gonggu.market.api.dto.item;
 
 public class ItemDto {
     private String name;
+    private String itemImageUrl;
     private String itemInfo;
     private int price;
     private int amount;
@@ -10,8 +11,9 @@ public class ItemDto {
     public ItemDto() {
     }
 
-    public ItemDto(String name, String itemInfo, int price, int amount, String category) {
+    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
         this.name = name;
+        this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
         this.price = price;
         this.amount = amount;
@@ -56,5 +58,13 @@ public class ItemDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getItemImageUrl() {
+        return itemImageUrl;
+    }
+
+    public void setItemImageUrl(String itemImageUrl) {
+        this.itemImageUrl = itemImageUrl;
     }
 }

@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .failureHandler(customAuthenticationFailureHandler)
               .and()
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/api/auth/logout")
                 .logoutSuccessUrl("/home")
                 .deleteCookies("JSEESIONID")
                 .invalidateHttpSession(true)
