@@ -1,9 +1,11 @@
 package com.gonggu.market.api.service;
 
+import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.domain.user.UserRepository;
+import com.gonggu.market.api.dto.user.UserProfileDto;
 import com.gonggu.market.api.dto.user.UserUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,5 +52,20 @@ public class UserService {
         }
         userEntity = userRepository.save(userEntity);
         return userEntity;
+    }
+
+    public UserProfileDto profile(Long userId, PrincipalDetails principalDetails) {
+        User userEntity = userRepository.findById(userId).get();
+        if (!principalDetails.getUser().getEmail().equals(userEntity.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+            return new UserProfileDto(
+                userEntity.getEmail(),
+                userEntity.getNickname(),
+                userEntity.getMobile(),
+                userEntity.getAddress().getZipcode(),
+                userEntity.getDetailAddress(),
+                userEntity.getPoint()
+        );
     }
 }
