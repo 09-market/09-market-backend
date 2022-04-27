@@ -67,6 +67,7 @@ public class ItemService {
         List<ItemDto> itemDtoList = new ArrayList<>();
         this.itemRepository.findAll().forEach(item -> {
             itemDtoList.add(new ItemDto(
+                    item.getId(),
                     item.getName(),
                     item.getItemImageUrl(),
                     item.getItem_info(),
