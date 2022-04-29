@@ -26,6 +26,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         logger.info("email : " + email);
         User userEntity = userRepository.findByEmail(email);
         if (email != null) {
+            logger.info("email 잘 넘어옴!");
             return new PrincipalDetails(userEntity);
         }
         return null;
