@@ -2,11 +2,8 @@ package com.gonggu.market.api.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gonggu.market.api.config.auth.PrincipalDetails;
-import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.dto.auth.SigninRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +32,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     // login 요청 시 실행되는 함수
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        logger.info("나 실행되니?");
+        logger.info("JwtAuthenticationFilter : 진입");
+
         ObjectMapper om = new ObjectMapper();
         SigninRequestDto signinRequestDto = null;
         try {
