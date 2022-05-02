@@ -21,6 +21,7 @@ import java.io.IOException;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+
     private final UserRepository userRepository;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
@@ -32,10 +33,18 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
-        logger.info(jwtHeader);
+        if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
+            chain.doFilter(request, response);
+            return;
+        }
+        logger.info("jwt header : " + jwtHeader);
 
-        // Header 인증
-        String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+
+        String jwtToken = request.getHeader(JwtProperties.HEADER_STRING)
+                .replace(JwtProperties.TOKEN_PREFIX, "");
+        if (jwtToken == null) {
+            logger.info("jwtToken is :" + jwtToken);
+        }
 
         String email = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET))
                 .build().verify(jwtToken).getClaim("email").asString();
@@ -43,7 +52,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         if (email != null) {
             User userEntity = userRepository.findByEmail(email);
             PrincipalDetails principalDetails = new PrincipalDetails(userEntity);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    principalDetails,
+                    null,
+                    principalDetails.getAuthorities());
             // security 세션에 Authentication 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

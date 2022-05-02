@@ -16,13 +16,13 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-    private final CorsFilter corsFilter;
+    private final CorsConfig corsConfig;
     private final UserRepository userRepository;
 
     public SecurityConfig(
-            @Autowired CorsFilter corsFilter,
+            @Autowired CorsConfig corsConfig,
             @Autowired UserRepository userRepository) {
-        this.corsFilter = corsFilter;
+        this.corsConfig = corsConfig;
         this.userRepository = userRepository;
     }
 
@@ -38,18 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(corsFilter)
+        http
+                .addFilter(corsConfig.corsFilter())
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+
                 .addFilter(getJwtAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
-                .antMatchers("/api/post/**", "/api/user/**", "/api/item/**")
+                .antMatchers("/api/post/**", "/api/user/**")
                 .access("hasRole('ROLE_USER')")
-                .anyRequest()
-                .permitAll();
+                .anyRequest().permitAll();
     }
 }
