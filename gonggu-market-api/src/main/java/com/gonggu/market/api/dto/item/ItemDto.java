@@ -1,7 +1,5 @@
 package com.gonggu.market.api.dto.item;
 
-import com.gonggu.market.api.domain.item.Item;
-
 public class ItemDto {
     private String name;
     private String itemImageUrl;

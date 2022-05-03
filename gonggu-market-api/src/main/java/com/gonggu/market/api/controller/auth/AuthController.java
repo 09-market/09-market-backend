@@ -21,9 +21,10 @@ public class AuthController {
         this.authService = authService;
     }
 
+
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody SignupDto dto) {
-        User result = authService.signup(dto);
+    public ResponseEntity<SignupDto> signup(@RequestBody SignupDto dto) {
+        SignupDto result = authService.signup(dto);
         return ResponseEntity.ok(result);
     }
 }

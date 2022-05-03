@@ -1,6 +1,7 @@
 package com.gonggu.market.api.domain.address;
 
 import com.gonggu.market.api.domain.BaseEntity;
+import com.gonggu.market.api.dto.auth.SignupDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,29 +44,10 @@ public class Address extends BaseEntity {
         return province;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public void setCitytown(String citytown) {
-        this.citytown = citytown;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", zipcode='" + zipcode + '\'' +
-                ", citytown='" + citytown + '\'' +
-                ", province='" + province + '\'' +
-                '}';
+    public static Address fromUserToAddress(SignupDto dto) {
+        String fullAddress = dto.getAddress();
+        String[] addressArray = fullAddress.split(" ");
+        Address address = new Address(null, dto.getZipcode(), addressArray[0], addressArray[1]);
+        return address;
     }
 }
