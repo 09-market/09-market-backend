@@ -23,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> signup(@RequestBody SignupDto dto) {
-        User result = authService.saveTest(dto);
+        User result = authService.signup(dto);
         return ResponseEntity.ok(result);
     }
 }
