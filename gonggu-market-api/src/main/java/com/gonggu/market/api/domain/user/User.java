@@ -1,6 +1,5 @@
 package com.gonggu.market.api.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.address.Address;
 
@@ -18,7 +17,7 @@ public class User extends BaseEntity {
     private String nickname;
     private String mobile;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(
             targetEntity = Address.class,
             fetch = FetchType.LAZY
@@ -51,60 +50,60 @@ public class User extends BaseEntity {
         return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public String getDetailAddress() {
-        return detailAddress;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
     public void setDetailAddress(String detailAddress) {
         this.detailAddress = detailAddress;
+    }
+
+    public int getPoint() {
+        return point;
     }
 
     public void setPoint(int point) {
@@ -117,20 +116,5 @@ public class User extends BaseEntity {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", address=" + address +
-                ", detailAddress='" + detailAddress + '\'' +
-                ", point=" + point +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

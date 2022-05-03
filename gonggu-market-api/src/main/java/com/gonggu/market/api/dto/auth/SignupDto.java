@@ -1,7 +1,5 @@
 package com.gonggu.market.api.dto.auth;
 
-import com.gonggu.market.api.domain.address.Address;
-
 public class SignupDto {
     private String email;
     private String password;
@@ -13,9 +11,8 @@ public class SignupDto {
     public SignupDto() {
     }
 
-    public SignupDto(String email, String password, String nickname, String mobile, String address, String zipcode) {
+    public SignupDto(String email, String nickname, String mobile, String address, String zipcode) {
         this.email = email;
-        this.password = password;
         this.nickname = nickname;
         this.mobile = mobile;
         this.address = address;
@@ -26,44 +23,44 @@ public class SignupDto {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getMobile() {
+        return mobile;
     }
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getZipcode() {
+        return zipcode;
     }
 
     public void setZipcode(String zipcode) {

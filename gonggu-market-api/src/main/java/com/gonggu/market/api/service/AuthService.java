@@ -5,15 +5,10 @@ import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.domain.user.UserRepository;
 import com.gonggu.market.api.dto.auth.SignupDto;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService {
@@ -29,13 +24,8 @@ public class AuthService {
         this.passwordEncoder = bCryptPasswordEncoder;
     }
 
-    public User signup(SignupDto dto) {
-        Address address = addressRepository.findByZipcode(dto.getZipcode());
-        if (address == null) {
-            System.out.println("address : " + address.toString());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
+    @Transactional
+    public SignupDto signup(SignupDto dto) {
         User user = new User();
         user.setEmail(dto.getEmail());
         String rawPassword = dto.getPassword();
@@ -43,10 +33,24 @@ public class AuthService {
         user.setPassword(encPassword);
         user.setNickname(dto.getNickname());
         user.setMobile(dto.getMobile());
-        user.setDetailAddress(dto.getAddress());
+
+        Address address = addressRepository.save(Address.fromUserToAddress(dto));
         user.setAddress(address);
+        String[] addArray = dto.getAddress().split(" ");
+        String detailAddress = "";
+        for (int i = 2; i < addArray.length; i++) {
+            detailAddress += addArray[i] + " ";
+        }
+        user.setDetailAddress(detailAddress);
         user.setRole("ROLE_USER");
-        user = userRepository.save(user);
-        return user;
+        User userEntity = userRepository.save(user);
+
+        return new SignupDto(
+                userEntity.getEmail(),
+                userEntity.getNickname(),
+                userEntity.getMobile(),
+                userEntity.getAddress().getCitytown() + userEntity.getAddress().getProvince() + userEntity.getDetailAddress(),
+                userEntity.getAddress().getZipcode()
+        );
     }
 }
