@@ -21,10 +21,13 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private int likes = 0;
+    private int comments = 0;
+
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String item_info, int price, int amount, Category category) {
+    public Item(Long id, String name, String itemImageUrl, String item_info, int price, int amount, Category category, int likes, int comments) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
@@ -32,61 +35,79 @@ public class Item extends BaseEntity {
         this.price = price;
         this.amount = amount;
         this.category = category;
+        this.likes = likes;
+        this.comments = comments;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getItemImageUrl() {
-        return itemImageUrl;
-    }
-
-    public String getItem_info() {
-        return item_info;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getItemImageUrl() {
+        return itemImageUrl;
+    }
+
     public void setItemImageUrl(String itemImageUrl) {
         this.itemImageUrl = itemImageUrl;
+    }
+
+    public String getItem_info() {
+        return item_info;
     }
 
     public void setItem_info(String item_info) {
         this.item_info = item_info;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }

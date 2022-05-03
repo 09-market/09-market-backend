@@ -1,77 +1,33 @@
 package com.gonggu.market.api.dto.item;
 
+import com.gonggu.market.api.domain.item.Item;
+
 public class ItemDto {
-    private Long itemId;
     private String name;
     private String itemImageUrl;
     private String itemInfo;
     private int price;
     private int amount;
     private String category;
-    private int likes = 0;
-    private int comments = 0;
 
     public ItemDto() {
     }
 
-    public ItemDto(Long itemId, String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
-        this.itemId = itemId;
+    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
         this.name = name;
         this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
         this.price = price;
         this.amount = amount;
         this.category = category;
-        this.likes = likes;
-        this.comments = comments;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getItemInfo() {
-        return itemInfo;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setItemInfo(String itemInfo) {
-        this.itemInfo = itemInfo;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getItemImageUrl() {
@@ -82,19 +38,35 @@ public class ItemDto {
         this.itemImageUrl = itemImageUrl;
     }
 
-    public int getLikes() {
-        return likes;
+    public String getItemInfo() {
+        return itemInfo;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setItemInfo(String itemInfo) {
+        this.itemInfo = itemInfo;
     }
 
-    public int getComments() {
-        return comments;
+    public int getPrice() {
+        return price;
     }
 
-    public void setComments(int comments) {
-        this.comments = comments;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

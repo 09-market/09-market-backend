@@ -39,4 +39,9 @@ public class ItemController {
     public ResponseEntity<List<ItemDto>> readItemAll() {
         return ResponseEntity.ok(this.itemService.readItemAll());
     }
+
+    @GetMapping("/{category}")
+    public ResponseEntity<List<ItemDto>> readItems(@PathVariable String category) {
+        return ResponseEntity.ok(this.itemService.readItemsByCategory(category));
+    }
 }

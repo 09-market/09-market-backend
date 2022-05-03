@@ -29,7 +29,7 @@ public class AuthService {
         this.passwordEncoder = bCryptPasswordEncoder;
     }
 
-    public User saveTest(SignupDto dto) {
+    public User signup(SignupDto dto) {
         Address address = addressRepository.findByZipcode(dto.getZipcode());
         if (address == null) {
             System.out.println("address : " + address.toString());

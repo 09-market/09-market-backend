@@ -44,7 +44,6 @@ public class ItemService {
             Files.write(imageFilePath, file.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
-            ;
         }
 
         Item item = new Item();
@@ -67,7 +66,6 @@ public class ItemService {
         List<ItemDto> itemDtoList = new ArrayList<>();
         this.itemRepository.findAll().forEach(item -> {
             itemDtoList.add(new ItemDto(
-                    item.getId(),
                     item.getName(),
                     item.getItemImageUrl(),
                     item.getItem_info(),
@@ -75,6 +73,21 @@ public class ItemService {
                     item.getAmount(),
                     item.getCategory().getCategoryName()
                     ));
+        });
+        return itemDtoList;
+    }
+
+    public List<ItemDto> readItemsByCategory(String category) {
+        List<ItemDto> itemDtoList = new ArrayList<>();
+        this.itemRepository.findAllByCategory(category).forEach(item -> {
+            itemDtoList.add(new ItemDto(
+                    item.getName(),
+                    item.getItemImageUrl(),
+                    item.getItem_info(),
+                    item.getPrice(),
+                    item.getAmount(),
+                    item.getCategory().getCategoryName()
+            ));
         });
         return itemDtoList;
     }
