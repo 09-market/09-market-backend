@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .addFilter(getJwtAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
-                .antMatchers("/api/post/**", "/api/user/**")
+                .antMatchers("/api/user/**")
                 .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
     }
