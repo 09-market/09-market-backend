@@ -49,7 +49,9 @@ public class AuthService {
                 userEntity.getEmail(),
                 userEntity.getNickname(),
                 userEntity.getMobile(),
-                userEntity.getAddress().getCitytown() + userEntity.getAddress().getProvince() + userEntity.getDetailAddress(),
+                userEntity.getAddress().getCitytown() + " " +
+                        userEntity.getAddress().getProvince() + " " +
+                        userEntity.getDetailAddress(),
                 userEntity.getAddress().getZipcode()
         );
     }
