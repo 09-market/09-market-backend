@@ -1,5 +1,6 @@
 package com.gonggu.market.api.config;
 
+import com.gonggu.market.api.config.jwt.JwtProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
