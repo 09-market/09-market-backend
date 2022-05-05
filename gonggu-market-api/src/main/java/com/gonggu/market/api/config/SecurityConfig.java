@@ -39,13 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilter(corsConfig.corsFilter())
+                .cors().configurationSource(corsConfig.corsFilter())
+        .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-
                 .addFilter(getJwtAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
