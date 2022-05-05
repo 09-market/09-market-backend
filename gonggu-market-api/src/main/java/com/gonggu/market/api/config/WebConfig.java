@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
+                .exposedHeaders(JwtProperties.HEADER_STRING)
                 .allowCredentials(true)
                 .maxAge(MAX_AGE_SECS)
         ;
