@@ -11,7 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
 
     @Bean
-    public CorsConfigurationSource corsFilter() {
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // js 처리 허용
@@ -19,6 +19,6 @@ public class CorsConfig {
         config.addAllowedHeader("*"); // 모든 header 에 응답 허용
         config.addAllowedMethod("*"); // post, get, put, delete, patch 요청 허용
         source.registerCorsConfiguration("/api/**", config);
-        return source;
+        return new CorsFilter(source);
     }
 }
