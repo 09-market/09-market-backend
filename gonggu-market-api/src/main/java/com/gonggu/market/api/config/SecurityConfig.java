@@ -11,23 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-    private final CorsConfig corsConfig;
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
 
     public SecurityConfig(
-            @Autowired CorsConfig corsConfig,
             @Autowired UserRepository userRepository) {
-        this.corsConfig = corsConfig;
         this.userRepository = userRepository;
-    }
-
-    @Bean public BCryptPasswordEncoder encode() {
-        return new BCryptPasswordEncoder();
     }
 
     public JwtAuthenticationFilter getJwtAuthenticationFilter() throws Exception {
@@ -39,10 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilter(corsConfig.corsFilter())
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(getJwtAuthenticationFilter())
@@ -52,4 +51,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder encode() {
+        return new BCryptPasswordEncoder();
+    }
+
 }
