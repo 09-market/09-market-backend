@@ -60,14 +60,14 @@ public class UserService {
         return userEntity;
     }
 
-    public UserProfileDto profile(Long userId, String token) {
+    public UserProfileDto profile(String userId, String token) {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
         logger.info(userIdFromToken.toString());
-        if (!userId.equals(userIdFromToken)) {
+        if (!Long.valueOf(userId).equals(userIdFromToken)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        User userEntity = userRepository.findById(userId).get();
+        User userEntity = userRepository.findById(Long.valueOf(userId)).get();
         return new UserProfileDto(
                 userEntity.getEmail(),
                 userEntity.getNickname(),

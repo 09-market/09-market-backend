@@ -36,7 +36,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileDto> profile(
-            @PathVariable Long userId,
+            @PathVariable String userId,
             @RequestHeader("Authorization") String token
             ) {
         UserProfileDto result = userService.profile(userId, token);
