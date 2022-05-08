@@ -1,9 +1,6 @@
 package com.gonggu.market.api.service;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
-import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.config.jwt.JwtProperties;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;

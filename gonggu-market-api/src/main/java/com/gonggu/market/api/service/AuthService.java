@@ -1,14 +1,18 @@
 package com.gonggu.market.api.service;
 
+import com.auth0.jwt.JWT;
+import com.gonggu.market.api.config.jwt.JwtProperties;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.domain.user.UserRepository;
 import com.gonggu.market.api.dto.auth.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
