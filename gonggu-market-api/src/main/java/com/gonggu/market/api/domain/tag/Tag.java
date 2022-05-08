@@ -21,6 +21,10 @@ public class Tag {
         this.type = type;
     }
 
+    public Tag(String tag) {
+        this.type = type;
+    }
+
     public Long getId() {
         return id;
     }
@@ -35,5 +39,13 @@ public class Tag {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
