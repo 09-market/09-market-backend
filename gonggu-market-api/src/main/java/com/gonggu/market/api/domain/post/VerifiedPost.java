@@ -1,8 +1,6 @@
 package com.gonggu.market.api.domain.post;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gonggu.market.api.domain.BaseEntity;
-import com.gonggu.market.api.domain.tag.Tag;
 import com.gonggu.market.api.domain.user.User;
 
 import javax.persistence.*;

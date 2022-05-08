@@ -1,4 +1,4 @@
-package com.gonggu.market.api.domain.tag;
+package com.gonggu.market.api.domain.hashtag;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,22 +6,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Tag {
+public class HashTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String type;
 
-    public Tag() {
+    public HashTag() {
     }
 
-    public Tag(Long id, String type) {
+    public HashTag(Long id, String type) {
         this.id = id;
         this.type = type;
     }
 
-    public Tag(String tag) {
+    public HashTag(String tag) {
         this.type = type;
     }
 
@@ -39,13 +39,5 @@ public class Tag {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                '}';
     }
 }
