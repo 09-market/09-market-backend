@@ -72,8 +72,8 @@ public class UserService {
                 userEntity.getEmail(),
                 userEntity.getNickname(),
                 userEntity.getMobile(),
-                userEntity.getAddress().getZipcode(),
                 userEntity.getDetailAddress(),
+                userEntity.getAddress().getZipcode(),
                 userEntity.getPoint()
         );
     }
