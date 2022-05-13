@@ -21,13 +21,14 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private String instagramUrl;
     private int likes = 0;
     private int comments = 0;
 
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String item_info, int price, int amount, Category category, int likes, int comments) {
+    public Item(Long id, String name, String itemImageUrl, String item_info, int price, int amount, Category category, String instagramUrl, int likes, int comments) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
@@ -35,6 +36,7 @@ public class Item extends BaseEntity {
         this.price = price;
         this.amount = amount;
         this.category = category;
+        this.instagramUrl = instagramUrl;
         this.likes = likes;
         this.comments = comments;
     }
@@ -93,6 +95,14 @@ public class Item extends BaseEntity {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getInstagramUrl() {
+        return instagramUrl;
+    }
+
+    public void setInstagramUrl(String instagramUrl) {
+        this.instagramUrl = instagramUrl;
     }
 
     public int getLikes() {

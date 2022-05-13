@@ -57,6 +57,7 @@ public class ItemService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         item.setCategory(category);
+        item.setItemImageUrl(imageFileName);
 
         item = itemRepository.save(item);
         return item;
@@ -71,7 +72,8 @@ public class ItemService {
                     item.getItem_info(),
                     item.getPrice(),
                     item.getAmount(),
-                    item.getCategory().getCategoryName()
+                    item.getCategory().getCategoryName(),
+                    item.getInstagramUrl()
                     ));
         });
         return itemDtoList;
@@ -86,7 +88,8 @@ public class ItemService {
                     item.getItem_info(),
                     item.getPrice(),
                     item.getAmount(),
-                    item.getCategory().getCategoryName()
+                    item.getCategory().getCategoryName(),
+                    item.getInstagramUrl()
             ));
         });
         return itemDtoList;
