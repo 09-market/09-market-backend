@@ -7,17 +7,19 @@ public class ItemDto {
     private int price;
     private int amount;
     private String category;
+    private String instagramUrl;
 
     public ItemDto() {
     }
 
-    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category) {
+    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category, String instagramUrl) {
         this.name = name;
         this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
         this.price = price;
         this.amount = amount;
         this.category = category;
+        this.itemImageUrl = itemImageUrl;
     }
 
     public String getName() {
@@ -66,5 +68,13 @@ public class ItemDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getInstagramUrl() {
+        return instagramUrl;
+    }
+
+    public void setInstagramUrl(String instagramUrl) {
+        this.instagramUrl = instagramUrl;
     }
 }
