@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,22 +27,22 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<?> update(@PathVariable Long userId,
-                                 @RequestBody UserUpdateDto dto,
-                                 @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        User userEntity = userService.update(userId, dto);
-        principalDetails.setUser(userEntity);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileDto> profile(
+            @PathVariable String userId ){
+        UserProfileDto result = userService.profile(userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{userId}/update")
+    public ResponseEntity<UserProfileDto> updateForm(
             @PathVariable String userId,
             @RequestHeader("Authorization") String token
             ) {
-        UserProfileDto result = userService.profile(userId, token);
-        return ResponseEntity.ok(result);
+        UserProfileDto result = userService.detail(userId, token);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 
 }

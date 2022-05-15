@@ -13,7 +13,7 @@ public class Item extends BaseEntity {
 
     private String name;
     private String itemImageUrl;
-    private String item_info;
+    private String itemInfo;
     private int price;
     private int amount;
 
@@ -28,11 +28,11 @@ public class Item extends BaseEntity {
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String item_info, int price, int amount, Category category, String instagramUrl, int likes, int comments) {
+    public Item(Long id, String name, String itemImageUrl, String itemInfo, int price, int amount, Category category, String instagramUrl, int likes, int comments) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
-        this.item_info = item_info;
+        this.itemInfo = itemInfo;
         this.price = price;
         this.amount = amount;
         this.category = category;
@@ -65,12 +65,12 @@ public class Item extends BaseEntity {
         this.itemImageUrl = itemImageUrl;
     }
 
-    public String getItem_info() {
-        return item_info;
+    public String getItemInfo() {
+        return itemInfo;
     }
 
-    public void setItem_info(String item_info) {
-        this.item_info = item_info;
+    public void setItemInfo(String itemInfo) {
+        this.itemInfo = itemInfo;
     }
 
     public int getPrice() {

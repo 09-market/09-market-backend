@@ -16,8 +16,9 @@ public class User extends BaseEntity {
     private String password;
     private String nickname;
     private String mobile;
+    private String userImageUrl;
+    private String userInfo;
 
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(
             targetEntity = Address.class,
             fetch = FetchType.LAZY
@@ -34,12 +35,14 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(Long id, String email, String password, String nickname, String mobile, Address address, String detailAddress, int point, String role) {
+    public User(Long id, String email, String password, String nickname, String mobile, String userImageUrl, String userInfo, Address address, String detailAddress, int point, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.mobile = mobile;
+        this.userImageUrl = userImageUrl;
+        this.userInfo = userInfo;
         this.address = address;
         this.detailAddress = detailAddress;
         this.point = point;
@@ -116,5 +119,21 @@ public class User extends BaseEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserImageUrl() {
+        return userImageUrl;
+    }
+
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
+    }
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
     }
 }

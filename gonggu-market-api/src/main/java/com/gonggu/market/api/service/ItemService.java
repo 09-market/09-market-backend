@@ -49,7 +49,7 @@ public class ItemService {
         Item item = new Item();
         item.setName(dto.getName());
         item.setItemImageUrl(imageFileName);
-        item.setItem_info(dto.getItemInfo());
+        item.setItemInfo(dto.getItemInfo());
         item.setPrice(dto.getPrice());
         item.setAmount(dto.getAmount());
         Category category = categoryRepository.findByCategoryName(dto.getCategory());
@@ -69,7 +69,7 @@ public class ItemService {
             itemDtoList.add(new ItemDto(
                     item.getName(),
                     item.getItemImageUrl(),
-                    item.getItem_info(),
+                    item.getItemInfo(),
                     item.getPrice(),
                     item.getAmount(),
                     item.getCategory().getCategoryName(),
@@ -85,7 +85,7 @@ public class ItemService {
             itemDtoList.add(new ItemDto(
                     item.getName(),
                     item.getItemImageUrl(),
-                    item.getItem_info(),
+                    item.getItemInfo(),
                     item.getPrice(),
                     item.getAmount(),
                     item.getCategory().getCategoryName(),
