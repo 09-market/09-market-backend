@@ -23,15 +23,9 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(@Autowired UserRepository userRepository,
-                       @Autowired AddressRepository addressRepository,
-                       @Autowired BCryptPasswordEncoder passwordEncoder) {
+    public UserService(@Autowired UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public UserProfileDto profile(String userId) {
