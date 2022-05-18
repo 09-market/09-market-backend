@@ -96,7 +96,7 @@ public class ItemService {
                     item.getAmount(),
                     item.getCategory().getCategoryName(),
                     item.getInstagramUrl()
-                    ));
+            ));
         });
         return itemDtoList;
     }
@@ -116,5 +116,61 @@ public class ItemService {
             ));
         });
         return itemDtoList;
+    }
+
+    public void update(Long itemId, MultipartFile file, ItemDto dto, String token) {
+        token = token.replace(JwtProperties.TOKEN_PREFIX, "");
+        Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
+        if (userRepository.findById(userIdFromToken).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (!this.itemRepository.existsById(itemId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Item itemEntity = itemRepository.findById(itemId).get();
+        if (!itemEntity.getUser().equals(userRepository.findById(userIdFromToken).get())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        if (file != null) {
+            UUID uuid = UUID.randomUUID();
+            String imageFileName = uuid + "_" + file.getOriginalFilename();
+
+            Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+            try {
+                Files.write(imageFilePath, file.getBytes());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            itemEntity.setItemImageUrl(imageFileName);
+        }
+
+        itemEntity.setName(dto.getName() == null ? itemEntity.getName() : dto.getName());
+        itemEntity.setItemInfo(dto.getItemInfo() == null ? itemEntity.getItemInfo() : dto.getItemInfo());
+        itemEntity.setPrice(dto.getPrice() == null ? itemEntity.getPrice() : dto.getPrice());
+        itemEntity.setAmount(dto.getAmount() == null ? itemEntity.getAmount() : dto.getAmount());
+
+        Category category = categoryRepository.findByCategoryName(dto.getCategory());
+        if (category == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        itemEntity.setCategory(dto.getCategory() == null ? itemEntity.getCategory() : category);
+        itemEntity.setInstagramUrl(dto.getInstagramUrl() == null ? itemEntity.getInstagramUrl() : dto.getInstagramUrl());
+
+        itemRepository.save(itemEntity);
+    }
+
+    public void delete(Long itemId, String token) {
+        token = token.replace(JwtProperties.TOKEN_PREFIX, "");
+        Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
+        if (userRepository.findById(userIdFromToken).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (!this.itemRepository.existsById(itemId)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Item itemEntity = itemRepository.findById(itemId).get();
+
+        if (!itemEntity.getUser().equals(userRepository.findById(userIdFromToken).get())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        itemRepository.delete(itemEntity);
     }
 }

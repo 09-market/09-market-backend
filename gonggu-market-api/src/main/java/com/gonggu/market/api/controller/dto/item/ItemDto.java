@@ -4,15 +4,15 @@ public class ItemDto {
     private String itemImageUrl;
     private String name;
     private String itemInfo;
-    private int price;
-    private int amount;
+    private Integer price;
+    private Integer amount;
     private String category;
     private String instagramUrl;
 
     public ItemDto() {
     }
 
-    public ItemDto(String name, String itemImageUrl, String itemInfo, int price, int amount, String category, String instagramUrl) {
+    public ItemDto(String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, String category, String instagramUrl) {
         this.name = name;
         this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
@@ -46,19 +46,19 @@ public class ItemDto {
         this.itemInfo = itemInfo;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 

@@ -15,8 +15,8 @@ public class Item extends BaseEntity {
     private String name;
     private String itemImageUrl;
     private String itemInfo;
-    private int price;
-    private int amount;
+    private Integer price;
+    private Integer amount;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -36,7 +36,7 @@ public class Item extends BaseEntity {
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String itemInfo, int price, int amount, Category category, String instagramUrl, int likes, int comments, User user) {
+    public Item(Long id, String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, Category category, String instagramUrl, int likes, int comments, User user) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
@@ -86,11 +86,11 @@ public class Item extends BaseEntity {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
@@ -136,5 +136,22 @@ public class Item extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", itemImageUrl='" + itemImageUrl + '\'' +
+                ", itemInfo='" + itemInfo + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", category=" + category +
+                ", instagramUrl='" + instagramUrl + '\'' +
+                ", likes=" + likes +
+                ", comments=" + comments +
+                ", user=" + user +
+                '}';
     }
 }

@@ -6,6 +6,7 @@ import com.gonggu.market.api.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,10 +26,10 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemDto> createItem(
-            @RequestPart(value = "file", required = true)MultipartFile file,
-            @RequestPart(value = "itemDto")ItemDto dto,
+            @RequestPart(value = "file", required = true) MultipartFile file,
+            @RequestPart(value = "itemDto") ItemDto dto,
             @RequestHeader("Authorization") String token
-            ) {
+    ) {
         logger.info("나 실행되니?");
         ItemDto result = itemService.create(file, dto, token);
         return ResponseEntity.ok(result);
@@ -42,5 +43,21 @@ public class ItemController {
     @GetMapping("/{category}")
     public ResponseEntity<List<ItemDto>> readItems(@PathVariable String category) {
         return ResponseEntity.ok(this.itemService.readItemsByCategory(category));
+    }
+
+    @PutMapping("/{itemId}")
+    public ResponseEntity<?> updateItem(@PathVariable Long itemId,
+                                        @RequestPart(value = "file", required = false) MultipartFile file,
+                                        @RequestPart(value = "itemDto") ItemDto dto,
+                                        @RequestHeader("Authorization") String token) {
+        this.itemService.update(itemId,file, dto, token);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<?> deleteItem(@PathVariable Long itemId,
+                                        @RequestHeader("Authorization") String token) {
+        this.itemService.delete(itemId, token);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
