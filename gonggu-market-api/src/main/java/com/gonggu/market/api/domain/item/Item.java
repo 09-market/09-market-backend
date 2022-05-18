@@ -2,6 +2,7 @@ package com.gonggu.market.api.domain.item;
 
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.category.Category;
+import com.gonggu.market.api.domain.user.User;
 
 import javax.persistence.*;
 
@@ -25,10 +26,17 @@ public class Item extends BaseEntity {
     private int likes = 0;
     private int comments = 0;
 
+    @ManyToOne(
+            targetEntity = User.class,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String itemInfo, int price, int amount, Category category, String instagramUrl, int likes, int comments) {
+    public Item(Long id, String name, String itemImageUrl, String itemInfo, int price, int amount, Category category, String instagramUrl, int likes, int comments, User user) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
@@ -39,6 +47,7 @@ public class Item extends BaseEntity {
         this.instagramUrl = instagramUrl;
         this.likes = likes;
         this.comments = comments;
+        this.user = user;
     }
 
     public Long getId() {
@@ -119,5 +128,13 @@ public class Item extends BaseEntity {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

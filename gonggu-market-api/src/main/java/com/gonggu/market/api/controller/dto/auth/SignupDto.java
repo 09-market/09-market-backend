@@ -1,21 +1,30 @@
-package com.gonggu.market.api.dto.user;
+package com.gonggu.market.api.controller.dto.auth;
 
-public class UserUpdateDto {
+public class SignupDto {
+    private String email;
     private String password;
     private String nickname;
     private String mobile;
     private String address;
     private String zipcode;
 
-    public UserUpdateDto() {
+    public SignupDto() {
     }
 
-    public UserUpdateDto(String password, String nickname, String mobile, String address, String zipcode) {
-        this.password = password;
+    public SignupDto(String email, String nickname, String mobile, String address, String zipcode) {
+        this.email = email;
         this.nickname = nickname;
         this.mobile = mobile;
         this.address = address;
         this.zipcode = zipcode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

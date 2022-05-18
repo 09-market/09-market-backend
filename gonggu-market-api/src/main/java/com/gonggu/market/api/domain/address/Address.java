@@ -1,7 +1,8 @@
 package com.gonggu.market.api.domain.address;
 
 import com.gonggu.market.api.domain.BaseEntity;
-import com.gonggu.market.api.dto.auth.SignupDto;
+import com.gonggu.market.api.controller.dto.auth.SignupDto;
+import com.gonggu.market.api.controller.dto.user.UserUpdateDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +46,13 @@ public class Address extends BaseEntity {
     }
 
     public static Address fromUserToAddress(SignupDto dto) {
+        String fullAddress = dto.getAddress();
+        String[] addressArray = fullAddress.split(" ");
+        Address address = new Address(null, dto.getZipcode(), addressArray[0], addressArray[1]);
+        return address;
+    }
+
+    public static Address fromUserToAddress(UserUpdateDto dto) {
         String fullAddress = dto.getAddress();
         String[] addressArray = fullAddress.split(" ");
         Address address = new Address(null, dto.getZipcode(), addressArray[0], addressArray[1]);

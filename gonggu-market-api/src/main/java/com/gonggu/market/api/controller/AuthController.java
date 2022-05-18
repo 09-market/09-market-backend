@@ -1,18 +1,15 @@
-package com.gonggu.market.api.controller.auth;
+package com.gonggu.market.api.controller;
 
 
-import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.domain.user.User;
-import com.gonggu.market.api.dto.auth.SignupDto;
-import com.gonggu.market.api.dto.user.UserUpdateDto;
+import com.gonggu.market.api.controller.dto.auth.SignupDto;
+import com.gonggu.market.api.controller.dto.user.UserUpdateDto;
 import com.gonggu.market.api.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -33,9 +30,9 @@ public class AuthController {
     @PutMapping("/{userId}/update")
     public ResponseEntity<?> update(@PathVariable Long userId,
                                     @RequestBody UserUpdateDto dto,
-                                    @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        User userEntity = authService.update(userId, dto);
-        principalDetails.setUser(userEntity);
-        return ResponseEntity.noContent().build();
+                                    @RequestPart(value = "file", required = false) MultipartFile file) {
+        User userEntity = authService.update(userId, dto , file);
+        return new ResponseEntity<>(userEntity, HttpStatus.NO_CONTENT);
     }
+
 }
