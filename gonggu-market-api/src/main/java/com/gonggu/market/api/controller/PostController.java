@@ -2,27 +2,21 @@ package com.gonggu.market.api.controller;
 
 import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.domain.post.VerifiedPost;
-import com.gonggu.market.api.dto.post.VerifiedPostDto;
+import com.gonggu.market.api.controller.dto.post.VerifiedPostDto;
 import com.gonggu.market.api.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Collection;
 
 
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
-    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     private final PostService postService;
 

@@ -3,23 +3,17 @@ package com.gonggu.market.api.service;
 import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.domain.post.VerifiedPost;
 import com.gonggu.market.api.domain.post.VerifiedPostRepository;
-import com.gonggu.market.api.domain.user.User;
-import com.gonggu.market.api.dto.post.VerifiedPostDto;
+import com.gonggu.market.api.controller.dto.post.VerifiedPostDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Service

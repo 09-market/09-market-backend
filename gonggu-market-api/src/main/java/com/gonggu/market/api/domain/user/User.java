@@ -2,8 +2,11 @@ package com.gonggu.market.api.domain.user;
 
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.address.Address;
+import com.gonggu.market.api.domain.item.Item;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "zeronine_user")
@@ -32,10 +35,17 @@ public class User extends BaseEntity {
 
     private String role;
 
+    @OneToMany (
+            targetEntity = Item.class,
+            fetch = FetchType.EAGER,
+            mappedBy = "user"
+    )
+    private List<Item> items = new ArrayList<>();
+
     public User() {
     }
 
-    public User(Long id, String email, String password, String nickname, String mobile, String userImageUrl, String userInfo, Address address, String detailAddress, int point, String role) {
+    public User(Long id, String email, String password, String nickname, String mobile, String userImageUrl, String userInfo, Address address, String detailAddress, int point, String role, List<Item> items) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -47,6 +57,7 @@ public class User extends BaseEntity {
         this.detailAddress = detailAddress;
         this.point = point;
         this.role = role;
+        this.items = items;
     }
 
     public Long getId() {
@@ -89,6 +100,22 @@ public class User extends BaseEntity {
         this.mobile = mobile;
     }
 
+    public String getUserImageUrl() {
+        return userImageUrl;
+    }
+
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
+    }
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -121,19 +148,29 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
-    public String getUserImageUrl() {
-        return userImageUrl;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setUserImageUrl(String userImageUrl) {
-        this.userImageUrl = userImageUrl;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public String getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", userImageUrl='" + userImageUrl + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", address=" + address +
+                ", detailAddress='" + detailAddress + '\'' +
+                ", point=" + point +
+                ", role='" + role + '\'' +
+                ", items=" + items +
+                '}';
     }
 }

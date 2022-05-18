@@ -1,8 +1,4 @@
-package com.gonggu.market.api.dto.post;
-
-import com.gonggu.market.api.domain.post.VerifiedPost;
-import com.gonggu.market.api.domain.user.User;
-import org.springframework.web.multipart.MultipartFile;
+package com.gonggu.market.api.controller.dto.post;
 
 import java.time.Instant;
 

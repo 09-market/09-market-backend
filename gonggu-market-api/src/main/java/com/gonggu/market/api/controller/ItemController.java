@@ -1,14 +1,12 @@
 package com.gonggu.market.api.controller;
 
-import com.gonggu.market.api.config.auth.PrincipalDetails;
 import com.gonggu.market.api.domain.item.Item;
-import com.gonggu.market.api.dto.item.ItemDto;
+import com.gonggu.market.api.controller.dto.item.ItemDto;
 import com.gonggu.market.api.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,12 +24,13 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> createItem(
-            @AuthenticationPrincipal PrincipalDetails principalDetails,
+    public ResponseEntity<ItemDto> createItem(
             @RequestPart(value = "file", required = true)MultipartFile file,
-            @RequestPart(value = "itemDto")ItemDto dto
+            @RequestPart(value = "itemDto")ItemDto dto,
+            @RequestHeader("Authorization") String token
             ) {
-        Item result = itemService.create(principalDetails, file, dto);
+        logger.info("나 실행되니?");
+        ItemDto result = itemService.create(file, dto, token);
         return ResponseEntity.ok(result);
     }
 

@@ -1,4 +1,4 @@
-package com.gonggu.market.api.dto.auth;
+package com.gonggu.market.api.controller.dto.auth;
 
 public class SigninRequestDto {
     private String email;

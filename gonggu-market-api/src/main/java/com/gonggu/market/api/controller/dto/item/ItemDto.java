@@ -1,8 +1,8 @@
-package com.gonggu.market.api.dto.item;
+package com.gonggu.market.api.controller.dto.item;
 
 public class ItemDto {
-    private String name;
     private String itemImageUrl;
+    private String name;
     private String itemInfo;
     private int price;
     private int amount;
@@ -76,5 +76,18 @@ public class ItemDto {
 
     public void setInstagramUrl(String instagramUrl) {
         this.instagramUrl = instagramUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDto{" +
+                "itemImageUrl='" + itemImageUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", itemInfo='" + itemInfo + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", category='" + category + '\'' +
+                ", instagramUrl='" + instagramUrl + '\'' +
+                '}';
     }
 }
