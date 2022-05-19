@@ -1,6 +1,9 @@
 package com.gonggu.market.api.controller.dto.item;
 
+import com.gonggu.market.api.domain.item.Item;
+
 public class ItemDto {
+    private Long itemId;
     private String itemImageUrl;
     private String name;
     private String itemInfo;
@@ -12,7 +15,19 @@ public class ItemDto {
     public ItemDto() {
     }
 
-    public ItemDto(String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, String category, String instagramUrl) {
+    public ItemDto(Item item) {
+        this.itemId = item.getId();
+        this.name = item.getName();
+        this.itemImageUrl = item.getItemImageUrl();
+        this.itemInfo = item.getItemInfo();
+        this.price = item.getPrice();
+        this.amount = item.getAmount();
+        this.category = item.getCategory().getCategoryName();
+        this.itemImageUrl = item.getItemImageUrl();
+    }
+
+    public ItemDto(Long itemId, String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, String category, String instagramUrl) {
+        this.itemId = itemId;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
         this.itemInfo = itemInfo;
@@ -20,6 +35,14 @@ public class ItemDto {
         this.amount = amount;
         this.category = category;
         this.itemImageUrl = itemImageUrl;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {

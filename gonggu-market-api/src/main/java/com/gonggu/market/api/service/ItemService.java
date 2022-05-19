@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -44,6 +45,7 @@ public class ItemService {
     @Value("${file.path}")
     private String uploadFolder;
 
+    @Transactional
     public ItemDto create(MultipartFile file, ItemDto dto, String token) {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
@@ -75,6 +77,7 @@ public class ItemService {
 
         item = itemRepository.save(item);
         return new ItemDto(
+                item.getId(),
                 item.getName(),
                 item.getItemImageUrl(),
                 item.getItemInfo(),
@@ -89,6 +92,7 @@ public class ItemService {
         List<ItemDto> itemDtoList = new ArrayList<>();
         this.itemRepository.findAll().forEach(item -> {
             itemDtoList.add(new ItemDto(
+                    item.getId(),
                     item.getName(),
                     item.getItemImageUrl(),
                     item.getItemInfo(),
@@ -101,11 +105,20 @@ public class ItemService {
         return itemDtoList;
     }
 
+    public ItemDto readItemById(Long id) {
+        Optional<Item> itemEntityOptional = this.itemRepository.findById(id);
+        if (itemEntityOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ItemDto(itemEntityOptional.get());
+    }
+
     public List<ItemDto> readItemsByCategory(String categoryName) {
         List<ItemDto> itemDtoList = new ArrayList<>();
         Category category = this.categoryRepository.findByCategoryName(categoryName);
         this.itemRepository.findAllByCategory(category).forEach(item -> {
             itemDtoList.add(new ItemDto(
+                    item.getId(),
                     item.getName(),
                     item.getItemImageUrl(),
                     item.getItemInfo(),
@@ -114,6 +127,14 @@ public class ItemService {
                     item.getCategory().getCategoryName(),
                     item.getInstagramUrl()
             ));
+        });
+        return itemDtoList;
+    }
+
+    public List<ItemDto> searchByName(String keword) {
+        List<ItemDto> itemDtoList = new ArrayList<>();
+        itemRepository.findByNameContaining(keword).forEach(item -> {
+            itemDtoList.add(new ItemDto(item));
         });
         return itemDtoList;
     }

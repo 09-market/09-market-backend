@@ -40,9 +40,20 @@ public class ItemController {
         return ResponseEntity.ok(this.itemService.readItemAll());
     }
 
+    @GetMapping("/{itemId}")
+    public ResponseEntity<ItemDto> readItem(@PathVariable Long itemId) {
+        return new ResponseEntity<>(this.itemService.readItemById(itemId), HttpStatus.OK);
+    }
+
     @GetMapping("/{category}")
-    public ResponseEntity<List<ItemDto>> readItems(@PathVariable String category) {
-        return ResponseEntity.ok(this.itemService.readItemsByCategory(category));
+    public ResponseEntity<List<ItemDto>> readItemsByCategory(@PathVariable String category) {
+        return new ResponseEntity<>(this.itemService.readItemsByCategory(category), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<ItemDto>> search(@PathVariable String keyword) {
+        List<ItemDto> result = itemService.searchByName(keyword);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/{itemId}")
