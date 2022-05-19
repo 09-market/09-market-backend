@@ -1,5 +1,6 @@
 package com.gonggu.market.api.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.item.Item;
@@ -35,6 +36,7 @@ public class User extends BaseEntity {
 
     private String role;
 
+    @JsonIgnore
     @OneToMany (
             targetEntity = Item.class,
             fetch = FetchType.EAGER,

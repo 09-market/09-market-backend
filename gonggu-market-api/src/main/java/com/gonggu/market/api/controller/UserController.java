@@ -29,14 +29,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{userId}/update")
-    public ResponseEntity<UserUpdateDto> updateForm(
-            @PathVariable String userId,
-            @RequestHeader("Authorization") String token
-            ) {
-        UserUpdateDto result = userService.detail(userId, token);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+
 
 
 }

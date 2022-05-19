@@ -1,5 +1,8 @@
 package com.gonggu.market.api.service;
 
+import com.auth0.jwt.JWT;
+import com.gonggu.market.api.config.jwt.JwtProperties;
+import com.gonggu.market.api.controller.dto.item.ItemDto;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
@@ -20,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -70,6 +75,44 @@ public class AuthService {
                         userEntity.getAddress().getProvince() + " " +
                         userEntity.getDetailAddress(),
                 userEntity.getAddress().getZipcode()
+        );
+    }
+
+    public UserUpdateDto detail(String userId, String token) {
+        token = token.replace(JwtProperties.TOKEN_PREFIX, "");
+        Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
+        logger.info(userIdFromToken.toString());
+        if (!Long.valueOf(userId).equals(userIdFromToken)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        User userEntity = userRepository.findById(Long.valueOf(userId)).get();
+        String address = userEntity.getAddress().getCitytown() + " " +
+                userEntity.getAddress().getProvince() + " " +
+                userEntity.getDetailAddress();
+        List<ItemDto> itemList = new ArrayList<>();
+        userEntity.getItems().forEach(item -> {
+            itemList.add(new ItemDto(
+                    item.getId(),
+                    item.getName(),
+                    item.getItemImageUrl(),
+                    item.getItemInfo(),
+                    item.getPrice(),
+                    item.getAmount(),
+                    item.getCategory().getCategoryName(),
+                    item.getInstagramUrl()
+            ));
+        });
+        return new UserUpdateDto(
+                userEntity.getEmail(),
+                "******",
+                userEntity.getNickname(),
+                userEntity.getMobile(),
+                userEntity.getUserImageUrl(),
+                userEntity.getUserInfo(),
+                address,
+                userEntity.getAddress().getZipcode(),
+                userEntity.getPoint(),
+                itemList
         );
     }
 
