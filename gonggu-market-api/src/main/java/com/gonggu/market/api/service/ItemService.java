@@ -2,6 +2,7 @@ package com.gonggu.market.api.service;
 
 import com.auth0.jwt.JWT;
 import com.gonggu.market.api.config.jwt.JwtProperties;
+import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.category.Category;
 import com.gonggu.market.api.domain.category.CategoryRepository;
 import com.gonggu.market.api.domain.item.Item;
@@ -88,18 +89,15 @@ public class ItemService {
         );
     }
 
-    public List<ItemDto> readItemAll() {
-        List<ItemDto> itemDtoList = new ArrayList<>();
+    public List<ItemViewDto> readItemAll() {
+        List<ItemViewDto> itemDtoList = new ArrayList<>();
         this.itemRepository.findAll().forEach(item -> {
-            itemDtoList.add(new ItemDto(
+            itemDtoList.add(new ItemViewDto(
                     item.getId(),
-                    item.getName(),
                     item.getItemImageUrl(),
-                    item.getItemInfo(),
-                    item.getPrice(),
-                    item.getAmount(),
-                    item.getCategory().getCategoryName(),
-                    item.getInstagramUrl()
+                    item.getName(),
+                    item.getLikes(),
+                    item.getComments()
             ));
         });
         return itemDtoList;
@@ -113,19 +111,16 @@ public class ItemService {
         return new ItemDto(itemEntityOptional.get());
     }
 
-    public List<ItemDto> readItemsByCategory(String categoryName) {
-        List<ItemDto> itemDtoList = new ArrayList<>();
+    public List<ItemViewDto> readItemsByCategory(String categoryName) {
+        List<ItemViewDto> itemDtoList = new ArrayList<>();
         Category category = this.categoryRepository.findByCategoryName(categoryName);
         this.itemRepository.findAllByCategory(category).forEach(item -> {
-            itemDtoList.add(new ItemDto(
+            itemDtoList.add(new ItemViewDto(
                     item.getId(),
-                    item.getName(),
                     item.getItemImageUrl(),
-                    item.getItemInfo(),
-                    item.getPrice(),
-                    item.getAmount(),
-                    item.getCategory().getCategoryName(),
-                    item.getInstagramUrl()
+                    item.getName(),
+                    item.getLikes(),
+                    item.getComments()
             ));
         });
         return itemDtoList;

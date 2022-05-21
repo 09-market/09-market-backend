@@ -1,5 +1,6 @@
 package com.gonggu.market.api.controller;
 
+import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.item.Item;
 import com.gonggu.market.api.controller.dto.item.ItemDto;
 import com.gonggu.market.api.service.ItemService;
@@ -36,8 +37,8 @@ public class ItemController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ItemDto>> readItemAll() {
-        return ResponseEntity.ok(this.itemService.readItemAll());
+    public ResponseEntity<List<ItemViewDto>> readItemAll() {
+        return new ResponseEntity<>(this.itemService.readItemAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
@@ -46,7 +47,7 @@ public class ItemController {
     }
 
     @GetMapping("/{category}")
-    public ResponseEntity<List<ItemDto>> readItemsByCategory(@PathVariable String category) {
+    public ResponseEntity<List<ItemViewDto>> readItemsByCategory(@PathVariable String category) {
         return new ResponseEntity<>(this.itemService.readItemsByCategory(category), HttpStatus.OK);
     }
 
