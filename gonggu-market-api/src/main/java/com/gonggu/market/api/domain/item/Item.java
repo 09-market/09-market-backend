@@ -1,5 +1,6 @@
 package com.gonggu.market.api.domain.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.category.Category;
 import com.gonggu.market.api.domain.user.User;
@@ -31,6 +32,7 @@ public class Item extends BaseEntity {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public Item() {

@@ -1,7 +1,10 @@
 package com.gonggu.market.api.domain.comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gonggu.market.api.domain.BaseEntity;
+import com.gonggu.market.api.domain.item.Item;
 import com.gonggu.market.api.domain.post.VerifiedPost;
+import com.gonggu.market.api.domain.user.User;
 
 import javax.persistence.*;
 
@@ -11,52 +14,56 @@ public class Comment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nickname;
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "verified_post_id")
-    private VerifiedPost verifiedPost;
+    @JsonIgnoreProperties({"items"})
+    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     public Comment() {
     }
 
-    public Comment(Long id, String nickname, String content, VerifiedPost verifiedPost) {
+    public Comment(Long id, String content, User user, Item item) {
         this.id = id;
-        this.nickname = nickname;
         this.content = content;
-        this.verifiedPost = verifiedPost;
+        this.user = user;
+        this.item = item;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNickname() {
-        return nickname;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
         return content;
     }
 
-    public VerifiedPost getVerifiedPost() {
-        return verifiedPost;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setVerifiedPost(VerifiedPost verifiedPost) {
-        this.verifiedPost = verifiedPost;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }
