@@ -17,7 +17,7 @@ public class Comment extends BaseEntity {
     private String content;
 
     @JsonIgnoreProperties({"items"})
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 

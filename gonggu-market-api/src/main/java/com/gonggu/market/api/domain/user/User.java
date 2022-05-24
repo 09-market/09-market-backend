@@ -1,6 +1,7 @@
 package com.gonggu.market.api.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.item.Item;
@@ -23,6 +24,7 @@ public class User extends BaseEntity {
     private String userImageUrl;
     private String userInfo;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(
             targetEntity = Address.class,
             fetch = FetchType.LAZY

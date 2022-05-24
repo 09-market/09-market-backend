@@ -1,11 +1,15 @@
 package com.gonggu.market.api.domain.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gonggu.market.api.domain.BaseEntity;
 import com.gonggu.market.api.domain.category.Category;
+import com.gonggu.market.api.domain.comment.Comment;
 import com.gonggu.market.api.domain.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Item extends BaseEntity {
@@ -25,7 +29,12 @@ public class Item extends BaseEntity {
 
     private String instagramUrl;
     private int likes = 0;
-    private int comments = 0;
+
+    @OneToMany(
+            targetEntity = Comment.class,
+            fetch = FetchType.EAGER,
+            mappedBy = "item")
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne(
             targetEntity = User.class,
@@ -38,7 +47,7 @@ public class Item extends BaseEntity {
     public Item() {
     }
 
-    public Item(Long id, String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, Category category, String instagramUrl, int likes, int comments, User user) {
+    public Item(Long id, String name, String itemImageUrl, String itemInfo, Integer price, Integer amount, Category category, String instagramUrl, int likes, List<Comment> comments, User user) {
         this.id = id;
         this.name = name;
         this.itemImageUrl = itemImageUrl;
@@ -124,11 +133,15 @@ public class Item extends BaseEntity {
         this.likes = likes;
     }
 
-    public int getComments() {
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(int comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 

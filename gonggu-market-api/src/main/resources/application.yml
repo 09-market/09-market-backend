@@ -6,4 +6,4 @@ spring:
     active: local
 
 file:
-  path: /Users/seominah/Desktop/sideprj/09-market-backend/upload/
+  path: /Users/seominah/Desktop/sideprj/09/upload

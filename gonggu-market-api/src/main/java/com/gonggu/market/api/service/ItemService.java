@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,6 +51,8 @@ public class ItemService {
     public ItemDto create(MultipartFile file, ItemDto dto, String token) {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
+
+
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid + "_" + file.getOriginalFilename();
 
@@ -97,7 +100,7 @@ public class ItemService {
                     item.getItemImageUrl(),
                     item.getName(),
                     item.getLikes(),
-                    item.getComments()
+                    item.getComments().size()
             ));
         });
         return itemDtoList;
@@ -108,7 +111,9 @@ public class ItemService {
         if (itemEntityOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ItemDto(itemEntityOptional.get());
+        return new ItemDto(
+                itemEntityOptional.get()
+        );
     }
 
     public List<ItemViewDto> readItemsByCategory(String categoryName) {
@@ -120,7 +125,7 @@ public class ItemService {
                     item.getItemImageUrl(),
                     item.getName(),
                     item.getLikes(),
-                    item.getComments()
+                    item.getComments().size()
             ));
         });
         return itemDtoList;

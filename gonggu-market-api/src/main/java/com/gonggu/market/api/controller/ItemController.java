@@ -31,7 +31,6 @@ public class ItemController {
             @RequestPart(value = "itemDto") ItemDto dto,
             @RequestHeader("Authorization") String token
     ) {
-        logger.info("나 실행되니?");
         ItemDto result = itemService.create(file, dto, token);
         return ResponseEntity.ok(result);
     }
@@ -41,7 +40,7 @@ public class ItemController {
         return new ResponseEntity<>(this.itemService.readItemAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/detail/{itemId}")
     public ResponseEntity<ItemDto> readItem(@PathVariable Long itemId) {
         return new ResponseEntity<>(this.itemService.readItemById(itemId), HttpStatus.OK);
     }
