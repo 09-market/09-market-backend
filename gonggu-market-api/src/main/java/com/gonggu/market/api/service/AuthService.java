@@ -3,6 +3,7 @@ package com.gonggu.market.api.service;
 import com.auth0.jwt.JWT;
 import com.gonggu.market.api.config.jwt.JwtProperties;
 import com.gonggu.market.api.controller.dto.item.ItemDto;
+import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 import com.gonggu.market.api.domain.address.Address;
 import com.gonggu.market.api.domain.address.AddressRepository;
 import com.gonggu.market.api.domain.user.User;
@@ -89,17 +90,10 @@ public class AuthService {
         String address = userEntity.getAddress().getCitytown() + " " +
                 userEntity.getAddress().getProvince() + " " +
                 userEntity.getDetailAddress();
-        List<ItemDto> itemList = new ArrayList<>();
+        List<ItemRequestDto> itemList = new ArrayList<>();
         userEntity.getItems().forEach(item -> {
-            itemList.add(new ItemDto(
-                    item.getId(),
-                    item.getName(),
-                    item.getItemImageUrl(),
-                    item.getItemInfo(),
-                    item.getPrice(),
-                    item.getAmount(),
-                    item.getCategory().getCategoryName(),
-                    item.getInstagramUrl()
+            itemList.add(new ItemRequestDto(
+                    item
             ));
         });
         return new UserUpdateDto(

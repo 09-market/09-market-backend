@@ -1,6 +1,6 @@
 package com.gonggu.market.api.controller.dto.user;
 
-import com.gonggu.market.api.controller.dto.item.ItemDto;
+import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ public class UserUpdateDto {
     private String address;
     private String zipcode;
     private int point;
-    private List<ItemDto> itemDtoList;
+    private List<ItemRequestDto> itemDtoList;
 
     public UserUpdateDto() {
     }
 
-    public UserUpdateDto(String email, String password, String nickname, String mobile, String userImageUrl, String userInfo, String address, String zipcode, int point, List<ItemDto> itemDtoList) {
+    public UserUpdateDto(String email, String password, String nickname, String mobile, String userImageUrl, String userInfo, String address, String zipcode, int point, List<ItemRequestDto> itemDtoList) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -104,27 +104,11 @@ public class UserUpdateDto {
         this.point = point;
     }
 
-    public List<ItemDto> getItemDtoList() {
+    public List<ItemRequestDto> getItemDtoList() {
         return itemDtoList;
     }
 
-    public void setItemDtoList(List<ItemDto> itemDtoList) {
+    public void setItemDtoList(List<ItemRequestDto> itemDtoList) {
         this.itemDtoList = itemDtoList;
-    }
-
-    @Override
-    public String toString() {
-        return "UserUpdateDto{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", userImageUrl='" + userImageUrl + '\'' +
-                ", userInfo='" + userInfo + '\'' +
-                ", address='" + address + '\'' +
-                ", zipcode='" + zipcode + '\'' +
-                ", point=" + point +
-                ", itemDtoList=" + itemDtoList +
-                '}';
     }
 }

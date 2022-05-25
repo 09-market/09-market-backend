@@ -30,18 +30,21 @@ public class Item extends BaseEntity {
     private String instagramUrl;
     private int likes = 0;
 
+    @JsonIgnore
     @OneToMany(
             targetEntity = Comment.class,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.EAGER,
-            mappedBy = "item")
+            mappedBy = "item"
+    )
     private List<Comment> comments = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(
             targetEntity = User.class,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     public Item() {

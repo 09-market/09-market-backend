@@ -24,10 +24,10 @@ public class User extends BaseEntity {
     private String userImageUrl;
     private String userInfo;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     @ManyToOne(
             targetEntity = Address.class,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "address_id")
     private Address address;

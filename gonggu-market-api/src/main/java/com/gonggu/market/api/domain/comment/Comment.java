@@ -21,8 +21,10 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @JsonIgnoreProperties({"user"})
     @JoinColumn(name = "item_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Item item;
 
     public Comment() {
