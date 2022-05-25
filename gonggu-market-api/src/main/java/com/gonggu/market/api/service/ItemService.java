@@ -2,6 +2,7 @@ package com.gonggu.market.api.service;
 
 import com.auth0.jwt.JWT;
 import com.gonggu.market.api.config.jwt.JwtProperties;
+import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.category.Category;
 import com.gonggu.market.api.domain.category.CategoryRepository;
@@ -10,6 +11,7 @@ import com.gonggu.market.api.domain.item.ItemRepository;
 import com.gonggu.market.api.controller.dto.item.ItemDto;
 import com.gonggu.market.api.domain.user.User;
 import com.gonggu.market.api.domain.user.UserRepository;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,22 +52,27 @@ public class ItemService {
     private String uploadFolder;
 
     @Transactional
-    public ItemDto create(MultipartFile file, ItemDto dto, String token) {
+    public ItemRequestDto create(ItemRequestDto dto, String token) throws IOException {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
-        UUID uuid = UUID.randomUUID();
-        String imageFileName = uuid + "_" + file.getOriginalFilename();
 
-        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-        try {
-            Files.write(imageFilePath, file.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (dto.getItemImageUrl() == null || dto.getItemImageUrl().equals("")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        UUID uuid = UUID.randomUUID();
+        String imageFileName = uuid + "_" + dto.getItemImageName();
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+        byte[] decode = Base64.decodeBase64(dto.getItemImageUrl());
+        FileOutputStream fos;
+        File target = new File(imageFilePath.toString());
+        target.createNewFile();
+        fos = new FileOutputStream(target);
+        fos.write(decode);
+        fos.close();
 
         Item item = new Item();
         item.setName(dto.getName());
-        item.setItemImageUrl(imageFileName);
+        item.setItemImageUrl(dto.getItemImageUrl());
         item.setItemInfo(dto.getItemInfo());
         item.setPrice(dto.getPrice());
         item.setAmount(dto.getAmount());
@@ -71,22 +81,12 @@ public class ItemService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         item.setCategory(category);
-        item.setItemImageUrl(imageFileName);
         item.setInstagramUrl(dto.getInstagramUrl());
         User user = userRepository.findById(userIdFromToken).get();
         item.setUser(user);
 
         item = itemRepository.save(item);
-        return new ItemDto(
-                item.getId(),
-                item.getName(),
-                item.getItemImageUrl(),
-                item.getItemInfo(),
-                item.getPrice(),
-                item.getAmount(),
-                item.getCategory().getCategoryName(),
-                item.getInstagramUrl()
-        );
+        return new ItemRequestDto(item);
     }
 
     public List<ItemViewDto> readItemAll() {
@@ -97,7 +97,7 @@ public class ItemService {
                     item.getItemImageUrl(),
                     item.getName(),
                     item.getLikes(),
-                    item.getComments()
+                    item.getComments().size()
             ));
         });
         return itemDtoList;
@@ -108,7 +108,9 @@ public class ItemService {
         if (itemEntityOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ItemDto(itemEntityOptional.get());
+        return new ItemDto(
+                itemEntityOptional.get()
+        );
     }
 
     public List<ItemViewDto> readItemsByCategory(String categoryName) {
@@ -120,7 +122,7 @@ public class ItemService {
                     item.getItemImageUrl(),
                     item.getName(),
                     item.getLikes(),
-                    item.getComments()
+                    item.getComments().size()
             ));
         });
         return itemDtoList;
@@ -134,7 +136,7 @@ public class ItemService {
         return itemDtoList;
     }
 
-    public void update(Long itemId, MultipartFile file, ItemDto dto, String token) {
+    public void update(Long itemId, ItemRequestDto dto, String token) throws IOException {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userIdFromToken = JWT.decode(token).getClaim("id").asLong();
         if (userRepository.findById(userIdFromToken).isEmpty()) {
@@ -146,29 +148,38 @@ public class ItemService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        if (file != null) {
-            UUID uuid = UUID.randomUUID();
-            String imageFileName = uuid + "_" + file.getOriginalFilename();
-
-            Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-            try {
-                Files.write(imageFilePath, file.getBytes());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            itemEntity.setItemImageUrl(imageFileName);
+        if (dto.getItemImageUrl() == null || dto.getItemImageUrl().equals("")) {
+            itemEntity.setItemImageUrl(itemEntity.getItemImageUrl());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
+        UUID uuid = UUID.randomUUID();
+        String imageFileName = uuid + "_" + dto.getItemImageName();
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+        byte[] decode = Base64.decodeBase64(dto.getItemImageUrl());
+        FileOutputStream fos;
+        File target = new File(imageFilePath.toString());
+        target.createNewFile();
+        fos = new FileOutputStream(target);
+        fos.write(decode);
+        fos.close();
+
+        itemEntity.setItemImageUrl(dto.getItemImageUrl());
         itemEntity.setName(dto.getName() == null ? itemEntity.getName() : dto.getName());
         itemEntity.setItemInfo(dto.getItemInfo() == null ? itemEntity.getItemInfo() : dto.getItemInfo());
         itemEntity.setPrice(dto.getPrice() == null ? itemEntity.getPrice() : dto.getPrice());
         itemEntity.setAmount(dto.getAmount() == null ? itemEntity.getAmount() : dto.getAmount());
 
-        Category category = categoryRepository.findByCategoryName(dto.getCategory());
-        if (category == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        if (dto.getCategory() != null) {
+            Category category = categoryRepository.findByCategoryName(dto.getCategory());
+            if (category == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            itemEntity.setCategory(category);
+        } else {
+            itemEntity.setCategory(itemEntity.getCategory());
         }
-        itemEntity.setCategory(dto.getCategory() == null ? itemEntity.getCategory() : category);
         itemEntity.setInstagramUrl(dto.getInstagramUrl() == null ? itemEntity.getInstagramUrl() : dto.getInstagramUrl());
 
         itemRepository.save(itemEntity);

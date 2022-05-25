@@ -1,7 +1,6 @@
 package com.gonggu.market.api.controller;
 
 import com.gonggu.market.api.controller.dto.comment.CommentDto;
-import com.gonggu.market.api.domain.comment.Comment;
 import com.gonggu.market.api.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,14 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto,
                                            @RequestHeader("Authorization") String token) {
-        Comment result = commentService.create(commentDto, token);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        CommentDto result = commentService.create(commentDto, token);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> commentDelete(@PathVariable Long id){
+        commentService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.gonggu.market.api.controller;
 
+import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.item.Item;
 import com.gonggu.market.api.controller.dto.item.ItemDto;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,14 +28,12 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemDto> createItem(
-            @RequestPart(value = "file", required = true) MultipartFile file,
-            @RequestPart(value = "itemDto") ItemDto dto,
+    public ResponseEntity<ItemRequestDto> createItem(
+            @RequestBody ItemRequestDto dto,
             @RequestHeader("Authorization") String token
-    ) {
-        logger.info("나 실행되니?");
-        ItemDto result = itemService.create(file, dto, token);
-        return ResponseEntity.ok(result);
+    ) throws IOException {
+        ItemRequestDto result = itemService.create(dto, token);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping()
@@ -41,7 +41,7 @@ public class ItemController {
         return new ResponseEntity<>(this.itemService.readItemAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/detail/{itemId}")
     public ResponseEntity<ItemDto> readItem(@PathVariable Long itemId) {
         return new ResponseEntity<>(this.itemService.readItemById(itemId), HttpStatus.OK);
     }
@@ -59,10 +59,9 @@ public class ItemController {
 
     @PutMapping("/{itemId}")
     public ResponseEntity<?> updateItem(@PathVariable Long itemId,
-                                        @RequestPart(value = "file", required = false) MultipartFile file,
-                                        @RequestPart(value = "itemDto") ItemDto dto,
-                                        @RequestHeader("Authorization") String token) {
-        this.itemService.update(itemId,file, dto, token);
+                                        @RequestBody ItemRequestDto dto,
+                                        @RequestHeader("Authorization") String token) throws IOException {
+        this.itemService.update(itemId, dto, token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -30,7 +30,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment create(CommentDto commentDto, String token) {
+    public CommentDto create(CommentDto commentDto, String token) {
         Item itemEntity = itemRepository.findById(commentDto.getItemId()).orElseThrow(() -> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         });
@@ -44,6 +44,19 @@ public class CommentService {
         comment.setContent(commentDto.getContent());
         comment.setItem(itemEntity);
         comment.setUser(userEntity);
-        return commentRepository.save(comment);
+        comment = commentRepository.save(comment);
+        return new CommentDto(
+                comment.getContent(),
+                comment.getItem().getId(),
+                comment.getUser().getNickname()
+        );
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        });
+        commentRepository.delete(comment);
     }
 }
