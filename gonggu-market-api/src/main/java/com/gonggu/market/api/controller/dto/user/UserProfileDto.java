@@ -5,6 +5,7 @@ import com.gonggu.market.api.domain.item.Item;
 import java.util.List;
 
 public class UserProfileDto {
+    private Long userId;
     private String nickname;
     private String userImageUrl;
     private String userInfo;
@@ -13,11 +14,20 @@ public class UserProfileDto {
     public UserProfileDto() {
     }
 
-    public UserProfileDto(String nickname, String userImageUrl, String userInfo, List<Item> items) {
+    public UserProfileDto(Long userId, String nickname, String userImageUrl, String userInfo, List<Item> items) {
+        this.userId = userId;
         this.nickname = nickname;
         this.userImageUrl = userImageUrl;
         this.userInfo = userInfo;
         this.items = items;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getNickname() {

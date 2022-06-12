@@ -21,6 +21,7 @@ public class UserService {
     public UserProfileDto profile(String userId) {
         User userEntity = userRepository.findById(Long.valueOf(userId)).get();
         return new UserProfileDto(
+                userEntity.getId(),
                 userEntity.getNickname(),
                 userEntity.getUserImageUrl(),
                 userEntity.getUserInfo(),
