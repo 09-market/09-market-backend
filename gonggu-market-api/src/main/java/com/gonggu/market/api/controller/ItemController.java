@@ -1,5 +1,6 @@
 package com.gonggu.market.api.controller;
 
+import com.gonggu.market.api.controller.dto.item.ItemDetailDto;
 import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.item.Item;
@@ -42,7 +43,7 @@ public class ItemController {
     }
 
     @GetMapping("/detail/{itemId}")
-    public ResponseEntity<ItemDto> readItem(@PathVariable Long itemId) {
+    public ResponseEntity<ItemDetailDto> readItem(@PathVariable Long itemId) {
         return new ResponseEntity<>(this.itemService.readItemById(itemId), HttpStatus.OK);
     }
 
