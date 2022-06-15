@@ -2,6 +2,7 @@ package com.gonggu.market.api.service;
 
 import com.auth0.jwt.JWT;
 import com.gonggu.market.api.config.jwt.JwtProperties;
+import com.gonggu.market.api.controller.dto.item.ItemDetailDto;
 import com.gonggu.market.api.controller.dto.item.ItemRequestDto;
 import com.gonggu.market.api.controller.dto.item.ItemViewDto;
 import com.gonggu.market.api.domain.category.Category;
@@ -102,12 +103,12 @@ public class ItemService {
         return itemDtoList;
     }
 
-    public ItemDto readItemById(Long id) {
+    public ItemDetailDto readItemById(Long id) {
         Optional<Item> itemEntityOptional = this.itemRepository.findById(id);
         if (itemEntityOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ItemDto(
+        return new ItemDetailDto(
                 itemEntityOptional.get()
         );
     }
