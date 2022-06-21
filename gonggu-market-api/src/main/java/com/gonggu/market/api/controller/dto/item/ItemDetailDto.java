@@ -1,7 +1,6 @@
 package com.gonggu.market.api.controller.dto.item;
 
 import com.gonggu.market.api.controller.dto.comment.CommentInItemDto;
-import com.gonggu.market.api.domain.comment.Comment;
 import com.gonggu.market.api.domain.item.Item;
 
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ public class ItemDetailDto {
         this.likes = item.getLikes();
         item.getComments().forEach(comment -> {
             comments.add(new CommentInItemDto(
+                    comment.getId(),
                     comment.getContent(),
                     comment.getItem().getId(),
                     comment.getUser().getNickname(),

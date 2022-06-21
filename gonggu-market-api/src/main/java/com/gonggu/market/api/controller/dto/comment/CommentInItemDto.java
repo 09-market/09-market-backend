@@ -3,6 +3,7 @@ package com.gonggu.market.api.controller.dto.comment;
 import com.gonggu.market.api.domain.item.Item;
 
 public class CommentInItemDto {
+    private Long commentId;
     private String content;
     private Long itemId;
     private String nickname;
@@ -12,12 +13,21 @@ public class CommentInItemDto {
     public CommentInItemDto() {
     }
 
-    public CommentInItemDto(String content, Long itemId, String nickname, Long userId, String userImageUrl) {
+    public CommentInItemDto(Long commentId, String content, Long itemId, String nickname, Long userId, String userImageUrl) {
+        this.commentId = commentId;
         this.content = content;
         this.itemId = itemId;
         this.nickname = nickname;
         this.userId = userId;
         this.userImageUrl = userImageUrl;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public String getContent() {
